@@ -1,120 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useState, useRef } from 'react'
 import './App.css'
-
+import { useCount } from './store/useCount'
+import { useTodo } from './store/useTodo'
+import { motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { count, increase, decrease, increaseWith, reset } = useCount()
+  const { todos, setTodo, deleteTodos } = useTodo()
+  const [data, setData] = useState({ name: "manish" + 1, age: 20 + 1, contact: 9798293519, id: Date.now() })
+  console.log(todos)
+  const add = () => {
+    setData((pre) => ({ name: pre.name + 1, age: pre.age + 1, contact: pre.contact + 1, id: Date.now() }))
+    setTodo(data)
+  }
+  const deleteTodo = (id) => {
+    deleteTodos(id)
+  }
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+     <h1 className='text-center text-2xl m-10'>Zustand State Management lib</h1>
+      <div className='flex justify-center gap-5 border m-5 p-10'>
 
-      <div className="ticks"></div>
+       
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <p className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded'>Count: {count}</p>
+        <button className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded' onClick={() => increase()}>count+</button>
+        <button className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded' onClick={() => reset()}>reset 0 </button>
+        <button className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded' onClick={() => decrease()}>count-</button>
+        <button className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded' onClick={() => increaseWith(2)}>count+2</button>
+      </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+
+
+      <div className='flex flex-col gap-5 overflow-x-0'>
+        <div className='flex justify-center'>
+          <button className='item-center bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded' onClick={add}>add Todos</button>
+        </div>
+
+        <AnimatePresence>
+          {
+            todos.map((item) => (
+              <motion.div
+                layout
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, x: 200 }}
+                key={item.id} className='flex justify-between gap-2 px-4 py-2 md:mx-20 mx-2 text-xs sm:mx-10 shadow-md shadow-lime-950 '>
+                <h1>{item.name}</h1>
+                <h1>{item.age}</h1>
+                <h1>{item.contact}</h1>
+                <h1>{item.id}</h1>
+                <button
+                  className='text-red-200 bg-pink-500 hover:bg-pink-200 px-3 py-1 cursor-pointer hover:text-red-500 rounded ease-linear duration-100'
+                  onClick={() => deleteTodo(item.id)}>x</button>
+              </motion.div>
+            ))
+          }
+        </AnimatePresence>
+      </div>
+
     </>
   )
 }
