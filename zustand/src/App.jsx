@@ -20,9 +20,6 @@ function App() {
     <>
      <h1 className='text-center text-2xl m-10'>Zustand State Management lib</h1>
       <div className='flex justify-center gap-5 border m-5 p-10'>
-
-       
-
         <p className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded'>Count: {count}</p>
         <button className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded' onClick={() => increase()}>count+</button>
         <button className='bg-pink-400 w-25 cursor-pointer h-auto p-1 rounded' onClick={() => reset()}>reset 0 </button>
