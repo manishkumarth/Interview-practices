@@ -1,0 +1,143 @@
+Class:=> A class is a blueprint or template for creating objects. It defines the properties (variables) and behaviors (methods) that an object will have. Memory is not allocated when a class is created; memory is allocated only when an object of the class is created.
+
+Object:=> An object is a real-time instance of a class. It represents a real-world entity and contains its own state (data) and behavior (methods). Memory is allocated when an object is created using the new keyword.
+
+class Student {
+    String name;
+    int age;
+
+    void study() {
+        System.out.println("Studying");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student(); // Object
+        s1.name = "Rahul";
+        s1.age = 22;
+        s1.study();
+    }
+}
+
+
+Encapsulation:=>Encapsulation is the process of combining data and methods into a single unit called a class. It hides the internal data by making variables private and provides controlled access through getter and setter methods. This improves data security, maintainability, and data hiding.
+
+Why do we use encapsulation?
+ answer:
+We use encapsulation to protect data from unauthorized access, improve security, make the code easier to maintain, and achieve data hiding.
+
+class Annimal {
+    private int age;
+    private String name;
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void sound() {
+        System.out.println("animal sound");
+    }
+}
+we can't do like dog.name="dog", dog.age=20
+Annimal dog= new Annimal()
+dog.setAge(int 20);            
+dog.setName(String "dog")
+
+
+Inheritance=> Inheritance allows child class to inherit prosperities and method from parent class.
+
+:parent class: 
+class Annimal {
+     int age;
+     String name;
+    public void sound() {
+        System.out.println("animal sound");
+    }
+
+}
+
+: child:  class haves age name and sound
+class Cat extends Annimal {
+    public void sound() {
+        System.out.println("cat sound");
+    }
+}
+
+
+What is polymorphism? It allows one interface or method to behave differently based on the object or parameters. there are two Types of polymorphism , compile-time polymorphism and runtime polymorphism. Compile-time uses method overloading (where the same method name has different parameters in one class); runtime uses method overriding(Overriding is inheriting a parent's method into a child class and changing its implementation with the same name). Why use it? To make code reusable, flexible, and easier to maintain. A classic follow-up is, why is runtime called dynamic? Because the method is chosen while the program is running.
+
+
+Overloading is multiple methods with the same name but different implementations in one class. Overriding is inheriting a parent's method into a child class and changing its implementation with the same name.
+
+:example : Overloading same method but work different
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+    double add(double a, double b) {
+        return a + b;
+    }
+}
+
+:example : Overrinding same inherited method but its own behabiar
+class Animal {
+    void sound() {
+        System.out.println("Generic sound");
+    }
+}
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Woof");
+    }
+}
+
+abstraction:=> abstraction is the process of hiding implementation details and showing only the essential features to the user. In Java, that's using abstract classes or interfaces, so users call methods without caring how those methods are written inside.
+
+
+
+
+
+
+
+
+
+
+
+"What is an interface?
+An interface is a blueprint that defines a contract for classes. It contains method declarations without implementation, and any class that implements the interface must provide the implementation for those methods. It is mainly used to achieve abstraction and supports multiple inheritance in Java.
+// Interface
+interface Payment {
+    void pay();   // By default, this is public and abstract
+}
+
+// Implementing class
+class CreditCard implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Payment done using Credit Card");
+    }
+}
+
+// Another implementing class
+class UPI implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Payment done using UPI");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Payment p1 = new CreditCard();
+        p1.pay();
+
+        Payment p2 = new UPI();
+        p2.pay();
+    }
+}
+
